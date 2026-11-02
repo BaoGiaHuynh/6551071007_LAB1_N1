@@ -317,15 +317,13 @@ namespace HotelManagement
             object? sender, EventArgs e)
         {
             string? maPhong = MaPhongDangChon();
-
-            MessageBox.Show(
-                "Chức năng đặt phòng đang được xây dựng."
-                + (maPhong != null
-                    ? "\nPhòng đang chọn: " + maPhong
-                    : ""),
-                "Thông báo",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            if (maPhong == null)
+            {
+                MessageBox.Show("Vui lòng chọn một phòng trước khi đặt.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            using var form = new HotelManagement.SoDoPhong.FormDatPhong(maPhong);
+            if (form.ShowDialog(this) == DialogResult.OK) TaiLaiDanhSach();
         }
 
         private void TaiLaiDanhSach()
